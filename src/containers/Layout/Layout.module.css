@@ -1,0 +1,40 @@
+.leftpanel{
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 20%;
+    background: #412f44;
+}
+.searchpanel{
+    position: fixed;
+    left: 22%;
+    top: 2%;
+    height: 15%;
+    width: 55%;    
+    background: white;
+}
+.messagepanel{
+    position: fixed;
+    left: 22%;
+    top: 20%;
+    height: 60%;
+    width: 55%;    
+    background: white;
+}
+.inputpanel{
+    position: fixed;
+    left: 22%;
+    top: 83%;
+    height: 15%;
+    width: 77%;    
+    background: white;
+}
+.rightpanel{
+    position: fixed;
+    right: 2%;
+    top: 2%;
+    height: 35%;
+    width: 20%;    
+    background: white;    
+}
