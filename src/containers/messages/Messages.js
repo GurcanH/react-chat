@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import style from "components/messages/Messages.module.css";
+import style from "containers/messages/Messages.module.css";
 import { Input, Button, Icon } from "semantic-ui-react";
 
 class Messages extends Component {

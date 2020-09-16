@@ -1,12 +1,12 @@
 import React from "react";
-import style from "containers/Layout/Layout.module.css";
+import style from "components/Layout/Layout.module.css";
 
 /////////////////////////////////////////////////////////////////
 //Layout Modules                                               //
-import Login from "components/login/Login";                    //
-import Search from "components/search/Search";                 //
-import MessageBody from "components/messageBody/MessageBody";  //
-import Messages from "components/messages/Messages";           //
+import Login from "containers/login/Login";                    //
+import Search from "containers/search/Search";                 //
+import MessageBody from "containers/messageBody/MessageBody";  //
+import Messages from "containers/messages/Messages";           //
 import Info from "components/info/Info";               //
 /////////////////////////////////////////////////////////////////
 

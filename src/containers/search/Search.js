@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import style from "components/search/Search.module.css";
+import style from "containers/search/Search.module.css";
 import { Input } from "semantic-ui-react";
 import "semantic-ui-css/semantic.min.css";
 

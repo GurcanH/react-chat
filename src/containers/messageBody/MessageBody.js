@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import style from "components/messageBody/MessageBody.module.css";
+import style from "containers/messageBody/MessageBody.module.css";
 
 class MessageBody extends Component {
     render() {
