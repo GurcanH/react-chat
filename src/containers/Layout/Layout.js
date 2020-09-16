@@ -3,6 +3,7 @@ import style from "containers/Layout/Layout.module.css";
 import Login from "components/login/Login";
 import Search from "components/search/Search";
 import MessageBody from "components/messageBody/MessageBody";
+import Messages from "components/messages/Messages";
 
 const layout = () => {
   return (
@@ -16,7 +17,9 @@ const layout = () => {
       <div className={style.messagepanel}>
         <MessageBody />
       </div>
-      <div className={style.inputpanel}></div>
+      <div className={style.inputpanel}>
+        <Messages />
+      </div>
       <div className={style.rightpanel}></div>
     </div>
   );

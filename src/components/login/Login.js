@@ -5,25 +5,25 @@ class Login extends Component {
   render() {
     return (
       <form>
-        <div className={style.container}>
-          <label for="uname">
+        <div className={style.Container}>
+          <label className={style.Label} for="uname">
             <b>Username</b>
           </label>
-          <input type="text" placeholder="Enter Username" name="uname" />
+          <input className={style.Input} type="text" placeholder="Enter Username" name="uname" />
 
-          <label for="psw">
+          <label className={style.Label} for="psw">
             <b>Password</b>
           </label>
-          <input type="password" placeholder="Enter Password" name="psw" />
+          <input className={style.Input}  type="password" placeholder="Enter Password" name="psw" />
 
-          <button type="submit">Login</button>
-          <label>
+          <button className={style.Button} type="submit">Login</button>
+          <label className={style.Label}>
             <input type="checkbox" checked="checked" name="remember" /> Remember
             me
           </label>
           <p></p>
           <div className={style.center}>
-            <label>Not a member? <a className={style.SignUpNow} href="/">Sign up now</a></label>
+            <label className={style.Label}>Not a member? <a className={style.SignUpNow} href="/">Sign up now</a></label>
           </div>
         </div>
       </form>
