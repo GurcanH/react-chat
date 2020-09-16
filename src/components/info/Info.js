@@ -1,7 +1,7 @@
 import React , { Component } from "react";
 import style from "components/info/Info.module.css";
 
-class Info extends React.Component {
+class Info extends Component {
     render() {
         return (
             <div className={style.Div}>
