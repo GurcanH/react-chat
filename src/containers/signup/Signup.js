@@ -4,9 +4,8 @@ import { connect } from 'react-redux';
 
 import * as actions from 'store/actions';
 import ActiveUser from "components/activeUser/ActiveUser";
-import Signup from "containers/signup/Signup";
 
-class Login extends Component {
+class Signup extends Component {
 
   state = {
     email: "",
@@ -22,11 +21,8 @@ class Login extends Component {
   
   submitHandler = ( event ) => {
     event.preventDefault();
-    this.props.Login( this.state.email, this.state.password );
+    this.props.Signup( this.state.email, this.state.password );
   }
-  signupHandler = () => {
-    this.props.SignupPrepare( this.state.email, this.state.password );
-  }  
   userName = () => {
     return this.state.email.substr(0, this.state.email.indexOf('@'))
   }
@@ -35,11 +31,7 @@ class Login extends Component {
   render() {
     let form = <ActiveUser name={this.userName()} />;
 
-    if (!this.props.isSignInMode){
-      form = <Signup />
-    }
-
-    if (!this.props.isAuthenticated && this.props.isSignInMode){
+    if (!this.props.isAuthenticated){
        form  = (<form onSubmit={this.submitHandler}>
         <div className={style.Container}>
           <label className={style.Label}>
@@ -52,17 +44,7 @@ class Login extends Component {
           </label>
           <input onChange={this.handleChange} className={style.Input}  value={this.state.password.value} type="password" placeholder="Enter Password" />
 
-          <button className={style.Button} type="submit">Login</button>
-          <label className={style.Label}>
-            <input type="checkbox" checked="checked" readOnly name="remember" /> Remember
-            me
-          </label>
-          <p></p>
-          <div className={style.center}>
-            <label className={style.Label}>Not a member? 
-                <span className={style.SignUpNow} onClick={this.signupHandler}>Sign up now</span>
-            </label>
-          </div>
+          <button className={style.Button} type="submit">Signup</button>
         </div>
       </form>)
     }
@@ -85,9 +67,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-      Login: ( email, password ) => dispatch( actions.login( email, password ) ),
-      SignupPrepare: () => dispatch( actions.signupPrepare() ),
+      Signup: ( email, password ) => dispatch( actions.signup( email, password ) ),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Signup);

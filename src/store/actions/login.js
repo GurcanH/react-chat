@@ -1,31 +1,51 @@
 import * as actionTypes from 'store/actions/actionTypes';
-import * as constants from 'shared/constants';
-import axios from 'axios';
+import { auth, firestore } from 'firebase';
+
+import {fetchUsers} from "store/actions/users";
+
 
 export const login = (email, password) => {
-    return  dispatch =>{
+    return  async dispatch => {
         dispatch(loginStart());
-        // debugger
-        const authData = {
-            email:email,
-            password:password,
-            returnSecureToken: true
-        }
-        let url = constants.FIREBASE_SIGNIN_URL + constants.FIREBASE_WEB_API_KEY;
-        // 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyChnJy-U_GSguuDPtUWT0PPKaHfM_rsqCs';
-        axios.post(url,authData)
-        .then(response =>{
-            console.log(response);
-            // const expirationDate = new Date(new Date().getTime() + response.data.expiresIn * 1000);
-            // localStorage.setItem('token', response.data.idToken);
-            // localStorage.setItem('expirationDate', expirationDate);
-            // localStorage.setItem('userId', response.data.localId);
-            dispatch(loginSuccess(response.data.idToken, response.data.localId));
+        auth()
+        .signInWithEmailAndPassword(email, password)
+        .then((data) => {
+            console.log(data);
+
+            const db = firestore();
+            db.collection('users')
+            .doc(data.user.uid)
+            .update({
+                isOnline: true
+            })
+            .then(() => {
+                const name = data.user.displayName.split(" ");
+                const firstName = name[0];
+                const lastName = name[1];
+
+                const loggedInUser = {
+                    firstName,
+                    lastName,
+                    uid: data.user.uid,
+                    email: data.user.email
+                }
+
+                localStorage.setItem('user', JSON.stringify(loggedInUser));
+
+                dispatch(fetchUsers( data.user.uid, data.user.refreshToken));
+
+                
+            })
+            .catch(error => {
+                console.log(error)
+            })
+
         })
         .catch(error => {
             console.log(error);
             dispatch(loginFail(error.response.data.error));
-        })
+        })        
+        
     }
 }
 
