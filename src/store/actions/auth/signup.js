@@ -6,13 +6,12 @@ import {fetchUsers} from "store/actions/auth/users";
 
 export const signup = (name, surname, email, password) => {
     return  async (dispatch) => {
-        dispatch(signupStart());
+        dispatch(signupStartDispatch());
         const db = firestore();
 
         auth()
         .createUserWithEmailAndPassword(email, password)
         .then(data => {
-            console.log(data);
             const currentUser = auth().currentUser;
             const userName = email.substr(0, email.indexOf('@'));
 
@@ -34,13 +33,13 @@ export const signup = (name, surname, email, password) => {
                 })
                 .then(() => {
                     //succeful
-                    dispatch(signupSuccess(data.user.refreshToken, data.user.uid));
+                    dispatch(signupSuccessDispatch(data.user.refreshToken, data.user.uid));
                     dispatch(fetchUsers( data.user.uid, data.user.refreshToken));
-                    dispatch(returnUserFullName( name + ' ' + surname));
+                    dispatch(returnUserFullNameDispatch( name + ' ' + surname));
                 })
                 .catch(error => {
                     console.log(error);
-                    dispatch(signupFail(error.response.data.error));
+                    dispatch(signupFailDispatch(error.response.data.error));
                     
                 });
             });
@@ -51,20 +50,20 @@ export const signup = (name, surname, email, password) => {
 
     }
 }
-export const returnUserFullName = (userFullName)=> {
+export const returnUserFullNameDispatch = (userFullName)=> {
     return {
         type: actionTypes.UPDATE_USER_FULL_NAME,
         userFullName: userFullName
     };
 }; 
 
-export const signupStart = ()=> {
+export const signupStartDispatch = ()=> {
     return {
         type: actionTypes.LOGIN_START
     };
 }; 
 
-export const signupSuccess = (token, userId)=> {
+export const signupSuccessDispatch = (token, userId)=> {
     return {
         type: actionTypes.SIGNUP_SUCCES,
         idToken: token,
@@ -73,14 +72,14 @@ export const signupSuccess = (token, userId)=> {
     };
 }; 
 
-export const signupFail = (error)=> {
+export const signupFailDispatch = (error)=> {
     return {
         type: actionTypes.SIGNUP_FAIL,
         error: error
     };
 }; 
 
-export const signupPrepare = ()=> {
+export const signupPrepareDispatch = ()=> {
     return {
         type: actionTypes.SIGNUP_PREPARE,
     };

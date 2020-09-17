@@ -1,5 +1,5 @@
 import * as actionTypes from 'store/actions/actionTypes';
-import {updateObject} from 'shared/utility' ;
+import {updateState} from 'shared/utility' ;
 
 const initialState =  {
     token: null,
@@ -11,16 +11,16 @@ const initialState =  {
     users: []
 }
 
-const updateUserFullName  = (state, action) => {
-    return updateObject(state, {userFullName: action.userFullName});
+const updateUserFullNameState  = (state, action) => {
+    return updateState(state, {userFullName: action.userFullName});
 };
 
-const loginStart  = (state, action) => {
-    return updateObject(state, {error: null, loading: true});
+const updateLoginStartState  = (state, action) => {
+    return updateState(state, {error: null, loading: true});
 };
 
-const loginSuccess = (state, action) => {
-    return updateObject(state, {
+const updateLoginSuccessState = (state, action) => {
+    return updateState(state, {
         token:action.idToken,
         userId: action.userId,
         error: null, 
@@ -29,42 +29,42 @@ const loginSuccess = (state, action) => {
     });
 };
 
-const loginFail = (state, action) => {
-    return updateObject(state, {
+const updateLoginFailState = (state, action) => {
+    return updateState(state, {
         error: action.error, 
         loading: false
     });
 }
 
-const logout = (state, action) => {
-    return updateObject(state, {token:null, userId:null, isSignInMode: true})
+const updateLogoutState = (state, action) => {
+    return updateState(state, {token:null, userId:null, isSignInMode: true})
 };
 
-const signupPrepare = (state, action) => {
-    return updateObject(state, {isSignInMode:false})
+const updatteSigninStateAsFalse = (state, action) => {
+    return updateState(state, {isSignInMode:false})
 };
 
-const signinPrepare = (state, action) => {
-    return updateObject(state, {isSignInMode:true})
+const updatteSigninStateAsTrue = (state, action) => {
+    return updateState(state, {isSignInMode:true})
 };
 
-const updateUsers = (state, action) => {
-    return updateObject(state, {users:action.users})
+const updateUsersState = (state, action) => {
+    return updateState(state, {users:action.users})
 };
 
 
 
 const reducer = (state=initialState, action) => {
     switch(action.type) {
-        case actionTypes.LOGIN_START: return loginStart(state, action);
-        case actionTypes.LOGIN_SUCCES: return loginSuccess(state, action);  
-        case actionTypes.SIGNUP_SUCCES: return loginSuccess(state, action);  
-        case actionTypes.LOGIN_FAIL: return loginFail(state, action);  
-        case actionTypes.LOGOUT: return logout(state, action); 
-        case actionTypes.SIGNUP_PREPARE: return signupPrepare(state, action); 
-        case actionTypes.SIGNIN_PREPARE: return signinPrepare(state, action); 
-        case actionTypes.UPDATE_USERS: return updateUsers(state, action);
-        case actionTypes.UPDATE_USER_FULL_NAME: return updateUserFullName(state, action);                        
+        case actionTypes.LOGIN_START: return updateLoginStartState(state, action);
+        case actionTypes.LOGIN_SUCCES: return updateLoginSuccessState(state, action);  
+        case actionTypes.SIGNUP_SUCCES: return updateLoginSuccessState(state, action);  
+        case actionTypes.LOGIN_FAIL: return updateLoginFailState(state, action);  
+        case actionTypes.LOGOUT: return updateLogoutState(state, action); 
+        case actionTypes.SIGNUP_PREPARE: return updatteSigninStateAsFalse(state, action); 
+        case actionTypes.SIGNIN_PREPARE: return updatteSigninStateAsTrue(state, action); 
+        case actionTypes.UPDATE_USERS: return updateUsersState(state, action);
+        case actionTypes.UPDATE_USER_FULL_NAME: return updateUserFullNameState(state, action);                        
         default: return state;
     }
 }

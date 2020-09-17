@@ -1,6 +1,9 @@
 .Div {
     width: 100%;
 }
+.DivNone {
+    display: none;
+}
 .ButtonDiv {
     margin-left: 20px;
 }

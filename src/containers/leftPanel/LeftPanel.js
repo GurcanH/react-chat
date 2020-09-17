@@ -22,14 +22,19 @@ class LeftPanel extends Component {
   submitHandler = () => {
     this.props.Logout();
   }
-  handleUserId = (uid) => {
-    this.props.SetUserId(uid, this.props.userId);
+  handleUserId = (obj) => {
+    this.props.ChangeUserInfo(obj);
+    this.props.FetchMessages(obj);
   }
   render() {
     const userList = this.props.users.map((user) => {
       let image = images[Math.floor(Math.random() * 3)];
+      let obj = { userReceiveUID:user.uid,
+                  userSendUID: this.props.userId,
+                  receiverFullName: user.name + ' ' + user.surname
+                 }
       return (
-        <List.Item onClick={() => this.handleUserId(user.uid)} key={user.uid  }>
+        <List.Item onClick={() => this.handleUserId(obj)} key={user.uid  }>
           <Image avatar src={image} />
           <List.Content>
             <List.Header>{user.name + " " + user.surname}</List.Header>
@@ -76,8 +81,9 @@ class LeftPanel extends Component {
 const mapDispatchToProps = (dispatch) => {
     return {
      
-      Logout: () => dispatch(actions.logout()),
-      SetUserId: (uid,userId) => dispatch(actions.changeReceiveUID(uid,userId))
+      Logout: () => dispatch(actions.logoutDispatch()),
+      ChangeUserInfo: (obj) => dispatch(actions.changeReceiveInfo(obj)),
+      FetchMessages: (obj) => dispatch(actions.fetchMessages(obj.userSendUID, obj.userReceiveUID))
     };
   };
 

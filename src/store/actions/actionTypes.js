@@ -22,3 +22,5 @@ export const UPDATE_USER_FULL_NAME = 'update_user_full_name';
 
 export const CHANGE_ACTIVE_USER = 'change_active_user';
 export const SEND_MESSAGE = 'send_message';
+export const CLEAR_CHAT_BOX = 'clear_chat_box';
+export const FETCH_MESSAGES = 'fetch_messages';

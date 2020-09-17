@@ -3,3 +3,13 @@
     right: 10px;
     margin-top: 10px;
 }
+
+.DivNone {
+    display: none;
+}
+
+.UserDiv {
+    position: absolute;
+    left: 10px;
+    margin-top: 10px;
+}

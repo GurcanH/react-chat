@@ -6,12 +6,10 @@ import {fetchUsers} from "store/actions/auth/users";
 
 export const login = (email, password) => {
     return  async dispatch => {
-        dispatch(loginStart());
+        dispatch(loginStartDispatch());
         auth()
         .signInWithEmailAndPassword(email, password)
         .then((data) => {
-            console.log(data);
-
             const db = firestore();
             db.collection('users')                   
             .doc(data.user.uid)
@@ -24,7 +22,7 @@ export const login = (email, password) => {
                     querySnapshot.forEach(function(doc) {
                         if(doc.data().uid === data.user.uid){
                             const userFullName = doc.data().name + ' ' + doc.data().surname;
-                            dispatch(returnUserFullName( userFullName));
+                            dispatch(returnUserFullNameDispatch( userFullName));
                         }                                       
                     })   
                 })  
@@ -43,6 +41,8 @@ export const login = (email, password) => {
 
                 localStorage.setItem('user', JSON.stringify(loggedInUser));
 
+                
+                // Call fetchUsers function from user action
                 dispatch(fetchUsers( data.user.uid, data.user.refreshToken));
 
                 
@@ -54,25 +54,25 @@ export const login = (email, password) => {
         })
         .catch(error => {
             console.log(error);
-            dispatch(loginFail(error.response.data.error));
+            dispatch(loginFailDispatch(error.message));
         })        
         
     }
 }
-export const returnUserFullName = (userFullName)=> {
+export const returnUserFullNameDispatch = (userFullName)=> {
     return {
         type: actionTypes.UPDATE_USER_FULL_NAME,
         userFullName: userFullName
     };
 }; 
 
-export const loginStart = ()=> {
+export const loginStartDispatch = ()=> {
     return {
         type: actionTypes.LOGIN_START
     };
 }; 
 
-export const loginSuccess = (token, userId)=> {
+export const loginSuccessDispatch = (token, userId)=> {
     return {
         type: actionTypes.LOGIN_SUCCES,
         idToken: token,
@@ -81,14 +81,14 @@ export const loginSuccess = (token, userId)=> {
     };
 }; 
 
-export const loginFail = (error)=> {
+export const loginFailDispatch = (error)=> {
     return {
         type: actionTypes.LOGIN_FAIL,
         error: error
     };
 }; 
 
-export const signinPrepare = ()=> {
+export const signinPrepareDispatch = ()=> {
     return {
         type: actionTypes.SIGNIN_PREPARE,
     };

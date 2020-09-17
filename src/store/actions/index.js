@@ -1,18 +1,19 @@
 export {
     login,
-    signinPrepare,
+    signinPrepareDispatch,
 } from 'store/actions/auth/login';
 
 export {
-    signupPrepare,
+    signupPrepareDispatch,
     signup
 } from 'store/actions/auth/signup';
 
 
-export { logout } 
+export { logoutDispatch } 
 from 'store/actions/auth/users';
 
 
 export {sendMessage,
-    changeReceiveUID} 
+    changeReceiveInfo,
+    fetchMessages} 
 from 'store/actions/chat/chat';

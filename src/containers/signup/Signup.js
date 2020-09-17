@@ -96,7 +96,7 @@ class Signup extends Component {
 const mapDispatchToProps = (dispatch) => {
   return {
     Signup: (name, surname, email, password) => dispatch(actions.signup(name, surname, email, password)),
-    SigninPrepare: () => dispatch(actions.signinPrepare()),
+    SigninPrepare: () => dispatch(actions.signinPrepareDispatch()),
   };
 };
 
