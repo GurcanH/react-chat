@@ -7,9 +7,13 @@ const initialState =  {
     error: null,
     loading: false,
     isSignInMode: true,
+    userFullName: '',
     users: []
 }
 
+const updateUserFullName  = (state, action) => {
+    return updateObject(state, {userFullName: action.userFullName});
+};
 
 const loginStart  = (state, action) => {
     return updateObject(state, {error: null, loading: true});
@@ -33,11 +37,15 @@ const loginFail = (state, action) => {
 }
 
 const logout = (state, action) => {
-    return updateObject(state, {token:null, userId:null})
+    return updateObject(state, {token:null, userId:null, isSignInMode: true})
 };
 
 const signupPrepare = (state, action) => {
     return updateObject(state, {isSignInMode:false})
+};
+
+const signinPrepare = (state, action) => {
+    return updateObject(state, {isSignInMode:true})
 };
 
 const updateUsers = (state, action) => {
@@ -54,7 +62,9 @@ const reducer = (state=initialState, action) => {
         case actionTypes.LOGIN_FAIL: return loginFail(state, action);  
         case actionTypes.LOGOUT: return logout(state, action); 
         case actionTypes.SIGNUP_PREPARE: return signupPrepare(state, action); 
-        case actionTypes.UPDATE_USERS: return updateUsers(state, action);           
+        case actionTypes.SIGNIN_PREPARE: return signinPrepare(state, action); 
+        case actionTypes.UPDATE_USERS: return updateUsers(state, action);
+        case actionTypes.UPDATE_USER_FULL_NAME: return updateUserFullName(state, action);                        
         default: return state;
     }
 }

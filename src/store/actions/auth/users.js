@@ -1,9 +1,9 @@
 import * as actionTypes from 'store/actions/actionTypes';
 import {firestore } from 'firebase';
 
-import {signupSuccess} from "store/actions/signup";
+import {signupSuccess} from "store/actions/auth/signup";
 
-export const fetchUsers = (uid, token) => {
+export const fetchUsers = (uid, token, userName) => {
     return async (dispatch) => {
 
         const db = firestore();
@@ -18,7 +18,8 @@ export const fetchUsers = (uid, token) => {
             dispatch(signupSuccess(token, uid));
             dispatch({ 
                 type: actionTypes.UPDATE_USERS,
-                users: { users }
+                users: users ,
+                userName: userName
             });
 
         });
@@ -28,3 +29,9 @@ export const fetchUsers = (uid, token) => {
     }
 
 }
+
+export const logout = ()=> {
+    return {
+        type: actionTypes.LOGOUT,
+    };
+}; 

@@ -2,9 +2,9 @@ import * as actionTypes from 'store/actions/actionTypes';
 import { auth, firestore } from 'firebase';
 
 
-import {fetchUsers} from "store/actions/users";
+import {fetchUsers} from "store/actions/auth/users";
 
-export const signup = (email, password) => {
+export const signup = (name, surname, email, password) => {
     return  async (dispatch) => {
         dispatch(signupStart());
         const db = firestore();
@@ -24,16 +24,19 @@ export const signup = (email, password) => {
                 db.collection('users')
                 .doc(data.user.uid)
                 .set({
-                    userName: userName,
+                    name: name,
+                    surname: surname,
                     uid: data.user.uid,
                     createdAt: new Date(),
                     isOnline: true, 
-                    email: email
+                    email: email, 
+                    userName: userName
                 })
                 .then(() => {
                     //succeful
                     dispatch(signupSuccess(data.user.refreshToken, data.user.uid));
                     dispatch(fetchUsers( data.user.uid, data.user.refreshToken));
+                    dispatch(returnUserFullName( name + ' ' + surname));
                 })
                 .catch(error => {
                     console.log(error);
@@ -48,6 +51,12 @@ export const signup = (email, password) => {
 
     }
 }
+export const returnUserFullName = (userFullName)=> {
+    return {
+        type: actionTypes.UPDATE_USER_FULL_NAME,
+        userFullName: userFullName
+    };
+}; 
 
 export const signupStart = ()=> {
     return {
@@ -74,6 +83,5 @@ export const signupFail = (error)=> {
 export const signupPrepare = ()=> {
     return {
         type: actionTypes.SIGNUP_PREPARE,
-        isSignInMode: false,
     };
 }; 

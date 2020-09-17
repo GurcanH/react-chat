@@ -1,74 +1,103 @@
 import React, { Component } from "react";
-import style from "containers/login/Login.module.css";
-import { connect } from 'react-redux';
+import style from "containers/signup/Signup.module.css";
+import { connect } from "react-redux";
+import { Input } from "semantic-ui-react";
 
-import * as actions from 'store/actions';
-import ActiveUser from "components/activeUser/ActiveUser";
+import * as actions from "store/actions";
 
 class Signup extends Component {
-
   state = {
+    name: "",
+    surname: "",
     email: "",
     password: ""
   };
 
   handleChange = (event) => {
+    this.setState({ [event.target.name]: event.target.value });
+  };
 
-    // [event.target.type] would be email or password!!!!
-    this.setState({ [event.target.type]: event.target.value });
-
-  };  
-  
-  submitHandler = ( event ) => {
+  submitHandler = (event) => {
     event.preventDefault();
-    this.props.Signup( this.state.email, this.state.password );
-  }
+    this.props.Signup(this.state.name, this.state.surname, this.state.email, this.state.password);
+  };
   userName = () => {
-    return this.state.email.substr(0, this.state.email.indexOf('@'))
-  }
-
+    return this.state.email.substr(0, this.state.email.indexOf("@"));
+  };
+  signinHandler = () => {
+    this.props.SigninPrepare();
+  };
 
   render() {
-    let form = <ActiveUser name={this.userName()} />;
+    return(
+        <form onSubmit={this.submitHandler}>
+          <div className={style.Container}>
+            <Input
+              icon="tag"
+              iconPosition="left"
+              name="name"
+              onChange={this.handleChange}
+              className={style.Input}
+              value={this.state.name.value}
+              type="text"
+              placeholder="Enter Your Name"
+            />
 
-    if (!this.props.isAuthenticated){
-       form  = (<form onSubmit={this.submitHandler}>
-        <div className={style.Container}>
-          <label className={style.Label}>
-            <b>Email</b>
-          </label>
-          <input onChange={this.handleChange} className={style.Input} value={this.state.email.value} type="email" placeholder="Enter Email" />
+            <Input
+              icon="tags"
+              iconPosition="left"
+              name="surname"
+              onChange={this.handleChange}
+              className={style.Input}
+              value={this.state.surname.value}
+              type="text"
+              placeholder="Enter Your Surname"
+            />
 
-          <label className={style.Label}>
-            <b>Password</b>
-          </label>
-          <input onChange={this.handleChange} className={style.Input}  value={this.state.password.value} type="password" placeholder="Enter Password" />
+            <Input
+              icon="at"
+              iconPosition="left"
+              name="email"
+              onChange={this.handleChange}
+              className={style.Input}
+              value={this.state.email.value}
+              type="email"
+              placeholder="Enter Email"
+            />
 
-          <button className={style.Button} type="submit">Signup</button>
-        </div>
-      </form>)
-    }
-    return (
-      <div>
-      {form}
-      </div>
-    );
+            <Input
+              icon="key"
+              iconPosition="left"
+              name="password"
+              onChange={this.handleChange}
+              className={style.Input}
+              value={this.state.password.value}
+              type="password"
+              placeholder="Enter Password"
+            />
+
+            <button className={style.Button} type="submit">
+              Signup
+            </button>
+            <div className={style.center}>
+            <label className={style.Label}>
+              <span className={style.SignInNow} onClick={this.signinHandler}>
+                Back
+              </span>
+            </label>
+          </div>            
+          </div>
+        </form>
+      );    
   }
 }
 
-const mapStateToProps = state => {
+
+const mapDispatchToProps = (dispatch) => {
   return {
-      loading: state.auth.loading,
-      error: state.auth.error,
-      isAuthenticated: state.auth.token !== null,
-      isSignInMode: state.auth.isSignInMode
+    Signup: (name, surname, email, password) => dispatch(actions.signup(name, surname, email, password)),
+    SigninPrepare: () => dispatch(actions.signinPrepare()),
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-      Signup: ( email, password ) => dispatch( actions.signup( email, password ) ),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Signup);
+export default connect(null, mapDispatchToProps)(Signup);

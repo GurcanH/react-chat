@@ -1,7 +1,7 @@
 import * as actionTypes from 'store/actions/actionTypes';
 import { auth, firestore } from 'firebase';
 
-import {fetchUsers} from "store/actions/users";
+import {fetchUsers} from "store/actions/auth/users";
 
 
 export const login = (email, password) => {
@@ -13,12 +13,23 @@ export const login = (email, password) => {
             console.log(data);
 
             const db = firestore();
-            db.collection('users')
+            db.collection('users')                   
             .doc(data.user.uid)
             .update({
                 isOnline: true
             })
+
             .then(() => {
+                db.collection('users').onSnapshot((querySnapshot) => {
+                    querySnapshot.forEach(function(doc) {
+                        if(doc.data().uid === data.user.uid){
+                            const userFullName = doc.data().name + ' ' + doc.data().surname;
+                            dispatch(returnUserFullName( userFullName));
+                        }                                       
+                    })   
+                })  
+
+
                 const name = data.user.displayName.split(" ");
                 const firstName = name[0];
                 const lastName = name[1];
@@ -48,7 +59,12 @@ export const login = (email, password) => {
         
     }
 }
-
+export const returnUserFullName = (userFullName)=> {
+    return {
+        type: actionTypes.UPDATE_USER_FULL_NAME,
+        userFullName: userFullName
+    };
+}; 
 
 export const loginStart = ()=> {
     return {
@@ -72,3 +88,8 @@ export const loginFail = (error)=> {
     };
 }; 
 
+export const signinPrepare = ()=> {
+    return {
+        type: actionTypes.SIGNIN_PREPARE,
+    };
+}; 

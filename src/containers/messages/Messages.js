@@ -1,8 +1,27 @@
 import React, { Component } from "react";
 import style from "containers/messages/Messages.module.css";
 import { Input, Button, Icon } from "semantic-ui-react";
+import { connect } from "react-redux";
+
+import * as actions from "store/actions";
 
 class Messages extends Component {
+
+  state = {
+    message: "",   
+  };
+  handleChange = (event) => {
+    // [event.target.type] would be email or password!!!!
+    this.setState({ message: event.target.value });
+  };
+  submitHandler = () => {
+    const obj = {userSendUID:this.props.userSendUID, 
+                userReceiveUID:this.props.userReceiveUID,
+                message: this.state.message, 
+                messageDate: new Date()}
+    this.props.SendMessage(obj);
+  };
+
   render() {
     return (
       <div className={style.Div}>
@@ -11,9 +30,11 @@ class Messages extends Component {
           action={{ color: "teal", icon: "add" }}
           actionPosition="left"
           placeholder="Write your message"
+          onChange={this.handleChange}
+          value={this.state.message}
         />
         <div className={style.ButtonDiv}>
-            <Button className={style.Button} color="orange" icon labelPosition="left">
+            <Button onClick={this.submitHandler} className={style.Button} color="orange" icon labelPosition="left">
             <Icon name="edit" />
             Add Reply
             </Button>
@@ -27,4 +48,16 @@ class Messages extends Component {
   }
 }
 
-export default Messages;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    SendMessage: (obj) => dispatch(actions.sendMessage(obj)),
+   
+  };
+};
+const mapStateToProps = (state) => {
+  return {
+    userSendUID: state.chat.userSendUID,
+    userReceiveUID: state.chat.userReceiveUID
+  };
+};
+export default connect(mapStateToProps,mapDispatchToProps)(Messages);

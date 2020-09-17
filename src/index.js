@@ -9,6 +9,7 @@ import thunk from 'redux-thunk';
 import App from 'App';
 import "index.css";  
 import authReducer from 'store/reducers/auth';
+import chatReducer from 'store/reducers/chat';
 import firebase from 'firebase';
 
 const composeEnhancers = process.env.NODE_ENV === 'development' ?  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose : null;
@@ -32,7 +33,8 @@ firebase.initializeApp(firebaseConfig);
 
 
 const rootReducer = combineReducers({
-  auth: authReducer
+  auth: authReducer,
+  chat: chatReducer
 })
 
 const store = createStore(rootReducer,  composeEnhancers  (

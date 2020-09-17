@@ -3,7 +3,7 @@ import style from "components/Layout/Layout.module.css";
 
 /////////////////////////////////////////////////////////////////
 //Layout Modules                                               //
-import Login from "containers/login/Login";                    //
+import LeftPanel from "containers/leftPanel/LeftPanel";                    //
 import Search from "containers/search/Search";                 //
 import MessageBody from "containers/messageBody/MessageBody";  //
 import Messages from "containers/messages/Messages";           //
@@ -15,7 +15,7 @@ const layout = () => {
   return (
     <div>
       <div className={style.leftpanel}>
-        <Login />
+        <LeftPanel />
       </div>
       <div className={style.searchpanel}>
         <Search />
