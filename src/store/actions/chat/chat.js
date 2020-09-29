@@ -1,5 +1,7 @@
 import * as actionTypes from 'store/actions/actionTypes';
-import {firestore } from 'firebase';
+// import {firestore } from 'firebase';
+import {  firestore } from 'firebase/app';
+import 'firebase/firestore';   // for cloud firestore
 
 export const fetchMessages = (userSendUID, userReceiveUID) => {
     return async (dispatch) => {

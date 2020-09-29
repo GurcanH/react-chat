@@ -1,5 +1,8 @@
 import * as actionTypes from 'store/actions/actionTypes';
-import { auth, firestore } from 'firebase';
+// import { auth, firestore } from 'firebase/app';
+import { auth, firestore } from 'firebase/app';
+import 'firebase/auth';        // for authentication
+import 'firebase/firestore';   // for cloud firestore
 
 
 import {fetchUsers} from "store/actions/auth/users";

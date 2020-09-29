@@ -10,7 +10,11 @@ import App from 'App';
 import "index.css";  
 import authReducer from 'store/reducers/auth';
 import chatReducer from 'store/reducers/chat';
-import firebase from 'firebase';
+// import firebase from 'firebase';
+import firebase from 'firebase/app';
+import 'firebase/auth';        // for authentication
+import 'firebase/firestore';   // for cloud firestore
+
 
 const composeEnhancers = process.env.NODE_ENV === 'development' ?  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose : null;
 

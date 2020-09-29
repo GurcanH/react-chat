@@ -1,5 +1,8 @@
 import * as actionTypes from 'store/actions/actionTypes';
-import {firestore } from 'firebase';
+// import {firestore } from 'firebase';
+
+import {  firestore } from 'firebase/app';
+import 'firebase/firestore';   // for cloud firestore
 
 import {signupSuccessDispatch} from "store/actions/auth/signup";
 
